@@ -1,4 +1,3 @@
-# aoc.py
 from typing import List
 
 
