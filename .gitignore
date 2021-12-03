@@ -2,3 +2,4 @@ input
 .vscode
 __pycache__
 aoc-env
+.env
