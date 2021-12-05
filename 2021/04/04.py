@@ -20,12 +20,15 @@ for line in inp[1:]:
 
 possible_wins = defaultdict(int)
 # horizontal
+possible_wins_list = []
 for key, value in boards.items():
     for line in value:
         print(line)
         print(line[::-1])
         possible_wins[str(line)] = key
         possible_wins[str(line[::-1])] = key
+        possible_wins_list.append(line.copy())
+        possible_wins_list.append(line.copy()[::-1])
 # vertical
 for key, value in boards.items():
     for i in range(0, 5):
@@ -34,6 +37,8 @@ for key, value in boards.items():
             vertical_win.append(line[i])
         possible_wins[str(vertical_win)] = key
         possible_wins[str(vertical_win[::-1])] = key
+        possible_wins_list.append(vertical_win.copy())
+        possible_wins_list.append(vertical_win.copy()[::-1])
 
 # diagonal
 # they dont count lol
@@ -52,31 +57,58 @@ for key, value in boards.items():
 print(possible_wins)
 
 
+# We dont need to generate a permutation that has already been generated
+# so lets keep it in memory, and not generate it again?
+generated_permutations = []
+
+
+def generate_permutation(seen_numbers, new_number):
+    # if we have 1,2,3,4,5,
+    # generate all those permutations,
+    # then we also get a 6, so generate only the newly possible permutations
+    # 1,2,3,4,6
+    # 1,2,3,5,6 and so on
+    pass
+
+
 def winning_board():
     seen_numbers = []
-    from itertools import permutations
 
+    winning_board_order = []
     for i in numbers:
-        print(i)
+        print(f"new number: {i}")
         seen_numbers.append(i)
-        if len(seen_numbers) >= 5:
-            perms = permutations(seen_numbers, 5)
-            for perm in list(perms):
-                #    print(str(list(perm)))
-                if str(list(perm)) in possible_wins:
-                    print("found winning board!")
-                    print(possible_wins[str(list(perm))])
-                    return possible_wins[str(list(perm))], i, seen_numbers
+        for idx, possible_win in enumerate(possible_wins_list):
+            if i in possible_win:
+                print("the number is in that seq, replace with x")
+                possible_wins_list[idx].append("x")
+                if possible_wins_list[idx].count("x") == 5:
+                    if possible_wins[str(possible_win[0:5])] not in winning_board_order:
+                        print("winning board added!")
+                        winning_board_order.append(
+                            possible_wins[str(possible_win[0:5])]
+                        )
+                        if len(winning_board_order) == len(boards.keys()):
+
+                            winning_number = i
+                            winning_seen_numbers = seen_numbers
+                            return (
+                                winning_board_order[-1],
+                                winning_number,
+                                winning_seen_numbers,
+                            )
+
+    print(winning_board_order)
 
 
 win_board, winning_number, seen_numbers = winning_board()
-print(winning_number)
-
+print(f"board num: {win_board} num: {winning_number} seen: {seen_numbers}")
 # check which numbers are not in seen_numbers
 unmarked = 0
+print(boards[win_board])
 for line in boards[win_board]:
     for num in line:
-        if num not in seen_numbers:
+        if num not in seen_numbers and num != "x":
             unmarked += num
 print(unmarked)
 print(unmarked * winning_number)
