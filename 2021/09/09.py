@@ -57,26 +57,14 @@ G = {}
 for y in range(len(inp)):
     for x in range(len(inp[y])):
         G[(y, x)] = []
-        try:
-            if y - 1 >= 0:
-                G[(y, x)].append([(y - 1, x), int(inp[y - 1][x])])
-        except:
-            print("list out of range")
-        try:
-            if y + 1 < len(inp):
-                G[(y, x)].append([(y + 1, x), int(inp[y + 1][x])])
-        except:
-            print("list out of range")
-        try:
-            if x + 1 < len(inp[y]):
-                G[(y, x)].append([(y, x + 1), int(inp[y][x + 1])])
-        except:
-            print("list out of range")
-        try:
-            if x - 1 >= 0:
-                G[(y, x)].append([(y, x - 1), int(inp[y][x - 1])])
-        except:
-            print("list out of range")
+        if y - 1 >= 0:
+            G[(y, x)].append([(y - 1, x), int(inp[y - 1][x])])
+        if y + 1 < len(inp):
+            G[(y, x)].append([(y + 1, x), int(inp[y + 1][x])])
+        if x + 1 < len(inp[y]):
+            G[(y, x)].append([(y, x + 1), int(inp[y][x + 1])])
+        if x - 1 >= 0:
+            G[(y, x)].append([(y, x - 1), int(inp[y][x - 1])])
 print(G)
 print(G.keys())
 print(G[(4, 9)])
