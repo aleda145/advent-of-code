@@ -12,7 +12,16 @@ def get_remaining_string(str, skip):
     return new_str
 
 
-sign_matching = {")": "(", "]": "[", "}": "{", ">": "<"}
+sign_matching = {
+    ")": "(",
+    "]": "[",
+    "}": "{",
+    ">": "<",
+    "(": ")",
+    "[": "]",
+    "{": "}",
+    "<": ">",
+}
 illegal_count = Counter()
 illegal_values = {
     ")": 3,
@@ -27,6 +36,7 @@ closed_signs = [
     "}",
     ">",
 ]
+remaining_lines = []
 for line in inp:
     signs_opened = {
         "(": 0,
@@ -43,6 +53,7 @@ for line in inp:
     }
     print(line)
     skip_indexes = []  # since they have been closed
+    corrupt_line = False
     for idx, char in enumerate(line):
 
         if char in open_signs:
@@ -65,20 +76,40 @@ for line in inp:
                 print(f"no match found for {char} at {idx}")
                 print(skip_indexes)
                 illegal_count[char] += 1
+                corrupt_line = True
                 break
-    print("remaining line was:")
-    print(get_remaining_string(line, skip_indexes))
+    if corrupt_line:
+        print("Line was corrupt, skipping")
+    else:
+        print("remaining line was:")
+        print(get_remaining_string(line, skip_indexes))
+        remaining_lines.append(get_remaining_string(line, skip_indexes))
 
-    # if signs_opened[sign_matching[char]] - signs_closed[char] < 0:
-    #    print(f"corrupt {char}!")
 
-    # break
-print(signs_opened)
-print(signs_closed)
+def get_score(str):
+    score_table = {")": 1, "]": 2, "}": 3, ">": 4}
+    score = 0
+    for char in str:
+        score = score * 5
+        score += score_table[char]
+    return score
 
-print(illegal_count)
+
+scores = []
+for line in remaining_lines:
+    matching_line = ""
+    for char in reversed(line):
+        matching_line += sign_matching[char]
+    print(matching_line)
+    print(get_score(matching_line))
+    scores.append(get_score(matching_line))
+
+import statistics
+
 illegal_sum = 0
 for illegal in illegal_count.elements():
     illegal_sum += illegal_values[illegal]
-
+print("Answer part 1:")
 print(illegal_sum)
+print("Answer part 2:")
+print(statistics.median(scores))
