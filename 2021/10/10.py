@@ -38,28 +38,11 @@ closed_signs = [
 ]
 remaining_lines = []
 for line in inp:
-    signs_opened = {
-        "(": 0,
-        "[": 0,
-        "{": 0,
-        "<": 0,
-    }
-
-    signs_closed = {
-        ")": 0,
-        "]": 0,
-        "}": 0,
-        ">": 0,
-    }
     print(line)
     skip_indexes = []  # since they have been closed
     corrupt_line = False
     for idx, char in enumerate(line):
-
-        if char in open_signs:
-            signs_opened[char] += 1
-        elif char in closed_signs:
-            signs_closed[char] += 1
+        if char in closed_signs:
             # check backwards, until it matches an opened, if it doesnt, its corrupt
             found_match = False
             for i in range(idx - 1, -1, -1):
