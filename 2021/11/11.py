@@ -58,7 +58,7 @@ import pprint
 
 pprint.pprint(octopus_energy)
 tot_flashes = 0
-for step in range(0, 100):
+for step in range(1, 1000):
     # increase all energy by one
     print(step)
     flashing_keys = []
@@ -76,7 +76,10 @@ for step in range(0, 100):
     # Reset to 0
     for flashing_key in flashing_keys:
         octopus_energy[flashing_key] = 0
+    if len(flashing_keys) == len(octopus_energy.keys()):
+        print(f"on step {step} all octupuses flash!")
+        break
     tot_flashes += len(flashing_keys)
 
-pprint.pprint(octopus_energy)
+# pprint.pprint(octopus_energy)
 print(tot_flashes)
