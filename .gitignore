@@ -3,3 +3,4 @@ input
 __pycache__
 aoc-env
 .env
+.envrc
