@@ -4,3 +4,4 @@ __pycache__
 aoc-env
 .env
 .envrc
+sample_input
