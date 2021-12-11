@@ -8,4 +8,7 @@ for idx, char in enumerate(inp):
         floor += 1
     elif char == ")":
         floor -= 1
+    if floor == -1:
+        print(idx + 1)
+        break
 print(floor)
