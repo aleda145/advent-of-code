@@ -10,7 +10,6 @@ for line in inp:
         if "fold along" in line:
             fold_instruction = line.split("along ")[1]
             fold_instructions.append(fold_instruction)
-            break
         else:
             x, y = line.split(",")
             paper[(int(x), int(y))] = "."
@@ -49,3 +48,18 @@ pprint.pprint(og_paper)
 print(len(og_paper))
 pprint.pprint(new_paper)
 print(len(new_paper))
+
+print(new_paper.keys())
+x_values = []
+y_values = []
+for key in new_paper.keys():
+    x_values.append(key[0])
+    y_values.append(key[1])
+
+for y in range(0, max(y_values) + 1):
+    for x in range(0, max(x_values) + 1):
+        if (x, y) in new_paper.keys():
+            print("#", end="")
+        else:
+            print(".", end="")
+    print("")
