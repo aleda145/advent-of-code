@@ -1,7 +1,7 @@
 input
 .vscode
 __pycache__
-aoc-env
+aoc-env*
 .env
 .envrc
 sample_input
