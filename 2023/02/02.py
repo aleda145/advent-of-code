@@ -1,4 +1,5 @@
 import util
+import math
 
 inp = util.input_as_lines("input")
 sample = util.input_as_lines("sample_input")
@@ -27,3 +28,21 @@ for line in inp:
             invalid_id += int(game_id)
             break
 print(all_ids - invalid_id)
+
+products = 0
+for line in inp:
+    print(line)
+    game, bags = line.split(":")
+    game_id = game.split(" ")[1]
+    print(game_id)
+    all_ids += int(game_id)
+    cubes = bags.replace(",", ";").split(";")
+    smallest = {"green": 0, "blue": 0, "red": 0}
+    for cube in cubes:
+        cube_num, cube_color = cube.strip(" ").split(" ")
+        if int(cube_num) > smallest[cube_color]:
+            smallest[cube_color] = int(cube_num)
+    print(smallest)
+    products += math.prod(smallest.values())
+
+print(products)
