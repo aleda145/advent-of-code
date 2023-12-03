@@ -1,3 +1,6 @@
+"""
+insanely sloppy lol
+"""
 import util
 from collections import Counter
 
@@ -44,6 +47,8 @@ for y, line in enumerate(inp):
             number += char
             if x != len(line) - 1:
                 continue
+        for number_coord in number_coords:
+            coords[tuple(number_coord)] = int(number)
         # if char != ".":
         #     symbols.append((x, y))
         # check if there are any adjacent symbols
@@ -66,26 +71,38 @@ print(sum)
 # print(coords)
 # print(symbols)
 
+# part 2
 # part_numbers_sum = 0
 # added_numbers = []
-# for symbol in symbols:
-#     check_coords = []
-#     check_coords.append([symbol[0] - 1, symbol[1] - 1])
-#     check_coords.append([symbol[0], symbol[1] - 1])
-#     check_coords.append([symbol[0] + 1, symbol[1] - 1])
-#     check_coords.append([symbol[0] - 1, symbol[1]])
-#     check_coords.append([symbol[0] + 1, symbol[1]])
-#     check_coords.append([symbol[0] - 1, symbol[1] + 1])
-#     check_coords.append([symbol[0], symbol[1] + 1])
-#     check_coords.append([symbol[0] + 1, symbol[1] + 1])
-#     for coord in check_coords:
-#         if tuple(coord) in coords:
-#             check_number = coords[tuple(coord)]
-#             if cnt[str(check_number)] > 0:
-#                 part_numbers_sum += check_number
-#                 cnt[str(check_number)] -= 1
+gears = []
+print("part 2")
+for symbol in symbols:
+    check_coords = []
+    check_coords.append([symbol[0] - 1, symbol[1] - 1])
+    check_coords.append([symbol[0], symbol[1] - 1])
+    check_coords.append([symbol[0] + 1, symbol[1] - 1])
+    check_coords.append([symbol[0] - 1, symbol[1]])
+    check_coords.append([symbol[0] + 1, symbol[1]])
+    check_coords.append([symbol[0] - 1, symbol[1] + 1])
+    check_coords.append([symbol[0], symbol[1] + 1])
+    check_coords.append([symbol[0] + 1, symbol[1] + 1])
+    matched = []
+    num_matched = 0
+    for coord in check_coords:
+        if tuple(coord) in coords:
+            check_number = coords[tuple(coord)]
+            if check_number not in matched:
+                num_matched += 1
+                matched.append(int(check_number))
+            if cnt[str(check_number)] > 0:
+                cnt[str(check_number)] -= 1
+    if num_matched == 2:
+        print(matched)
+        gears.append(matched[0] * matched[1])
 
-# # print(check_coords)
-# # print(cnt)
-# # print(cnt)
-# # print(part_numbers_sum)
+print(check_coords)
+print(cnt)
+print(cnt)
+print(gears)
+del sum
+print(sum(gears))
